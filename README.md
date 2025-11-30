@@ -2,11 +2,8 @@
 
 Fabric server-side mod that enables BungeeCord/Velocity *legacy* forwarding (IP + UUID + profile data) on your backend servers.
 
-## Usage
 - Only allows logins that include the legacy forwarding payload (`host\0ip\0uuid\0profileJson`).
 - Rejects plain/offline logins before authentication with a clear disconnect message.
-- Rewrites the connection address to the forwarded IP and applies the forwarded UUID + profile properties.
-- Expands the handshake hostname length so the forwarding payload is not truncated.
 
 ## Supported versions
 - Minecraft: 1.20.4–1.21.10 (Fabric)
