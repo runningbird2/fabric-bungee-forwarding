@@ -1,21 +1,28 @@
-# fabric-bungee-forwarding
+# Fabric Bungee Forwarding
 
-Fabric mod for Minecraft 1.21.10 that implements BungeeCord-style forwarding on the server side.
+Fabric server-side mod that enforces BungeeCord/Velocity *legacy* forwarding (IP + UUID + profile data) on your backend servers.
 
-## Behaviour
-- Accepts only logins that include the Bungee/Velocity legacy forwarding payload (`host\0ip\0uuid\0profileJson`).
-- Rejects plain/offline logins with a disconnect message before authentication proceeds.
-- Rewrites the connection address to the forwarded IP and applies forwarded UUID/properties to the joining profile.
-- Increases the handshake hostname length limit so the forwarded payload is not truncated.
+## Usage
+- Only allows logins that include the legacy forwarding payload (`host\0ip\0uuid\0profileJson`).
+- Rejects plain/offline logins before authentication with a clear disconnect message.
+- Rewrites the connection address to the forwarded IP and applies the forwarded UUID + profile properties.
+- Expands the handshake hostname length so the forwarding payload is not truncated.
 
-## Building
+## Supported versions
+- Minecraft: 1.20.4–1.21.10 (Fabric)
+- Java: 21
+
+## Quick start (proxy + backend)
+1) Remove any other forwarding mods from the backend (`mods/`), e.g. FabricProxy-Lite.  
+2) Drop the latest `fabric-bungee-forwarding-<mod>+<mc>.jar` into the backend `mods/` folder.  
+3) Proxy: enable legacy/“bungeecord” forwarding (Velocity: `player-info-forwarding-mode = legacy`; Bungee/Waterfall: standard IP forwarding).  
+4) Backend: run in offline mode with `bungeecord: true` (or equivalent), then restart.  
+5) Connect through the proxy; direct connections will be rejected unless they include forwarding data.
+
+No config file is required. Keep one forwarding mod per backend to avoid conflicts.
+
+## Building from source
 ```bash
 ./gradlew build
 ```
-The remapped jar is produced at `build/libs/fabric-bungee-forwarding-<version>.jar`.
-
-## Deploying
-1. Remove FabricProxy-Lite (or any other forwarding mod) from the server `mods/` directory.
-2. Drop the built jar into `mods/`.
-3. Set your proxy to `player-info-forwarding-mode = legacy` (Velocity) and ensure backends run in offline mode with `bungeecord: true`.
-4. Restart the server.
+The remapped jar will be in `build/libs/fabric-bungee-forwarding-<mod_version>+<mc_version>.jar`.
