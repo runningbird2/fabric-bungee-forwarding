@@ -4,6 +4,7 @@
   "package": "com.runningbird.fabricbungeeforwarding.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "GameProfileAccessor",
     "ConnectionAccessor",
     "ConnectionMixin",
     "ClientIntentionPacketMixin",
