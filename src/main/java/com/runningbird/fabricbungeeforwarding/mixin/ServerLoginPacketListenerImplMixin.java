@@ -58,8 +58,8 @@ public abstract class ServerLoginPacketListenerImplMixin {
             this.startClientVerification(profile);
             com.runningbird.fabricbungeeforwarding.BungeeForwardingMod.LOGGER.debug(
                 "[BFF] Built forwarded profile name={} uuid={} props={}",
-                profile.name(),
-                profile.id(),
+                ((GameProfileAccessor) (Object) profile).bff$getName(),
+                ((GameProfileAccessor) (Object) profile).bff$getId(),
                 ((GameProfileAccessor) (Object) profile).bff$getProperties().size()
             );
             ci.cancel();
