@@ -10,7 +10,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.handshake.ClientIntentionPacket;
 import net.minecraft.network.protocol.handshake.ClientIntent;
 import net.minecraft.network.protocol.login.ClientboundLoginDisconnectPacket;
-import net.minecraft.network.protocol.login.LoginProtocols;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerHandshakePacketListenerImpl;
 import org.spongepowered.asm.mixin.Final;
@@ -50,7 +49,6 @@ public abstract class ServerHandshakePacketListenerImplMixin {
         boolean hasForwarding = parts.length == 3 || parts.length == 4;
         if (!hasForwarding || !BFF_HOST_PATTERN.matcher(parts[1]).matches()) {
             Component message = Component.literal("If you wish to use IP forwarding, please enable it in your proxy config as well!");
-            this.connection.setupOutboundProtocol(LoginProtocols.CLIENTBOUND);
             this.connection.send(new ClientboundLoginDisconnectPacket(message));
             this.connection.disconnect(message);
             BungeeForwardingMod.LOGGER.warn("[BFF] Rejecting connection: invalid forwarding payload parts={} host={}", parts.length, rawHost);
@@ -63,7 +61,6 @@ public abstract class ServerHandshakePacketListenerImplMixin {
             uuid = UndashedUuid.fromStringLenient(parts[2]);
         } catch (IllegalArgumentException ex) {
             Component message = Component.literal("Invalid forwarded UUID from proxy.");
-            this.connection.setupOutboundProtocol(LoginProtocols.CLIENTBOUND);
             this.connection.send(new ClientboundLoginDisconnectPacket(message));
             this.connection.disconnect(message);
             BungeeForwardingMod.LOGGER.warn("[BFF] Rejecting connection: bad UUID {}, error={}", parts[2], ex.toString());
@@ -78,7 +75,6 @@ public abstract class ServerHandshakePacketListenerImplMixin {
                 properties = decoded == null ? new Property[0] : decoded;
             } catch (Exception ex) {
                 Component message = Component.literal("Unable to read player profile from proxy.");
-                this.connection.setupOutboundProtocol(LoginProtocols.CLIENTBOUND);
                 this.connection.send(new ClientboundLoginDisconnectPacket(message));
                 this.connection.disconnect(message);
                 BungeeForwardingMod.LOGGER.warn("[BFF] Rejecting connection: profile parse failed, error={}", ex.toString());
@@ -90,7 +86,6 @@ public abstract class ServerHandshakePacketListenerImplMixin {
         InetSocketAddress remote = this.connection.getRemoteAddress() instanceof InetSocketAddress inet ? inet : null;
         if (remote == null) {
             Component message = Component.literal("Unable to determine remote address for forwarding.");
-            this.connection.setupOutboundProtocol(LoginProtocols.CLIENTBOUND);
             this.connection.send(new ClientboundLoginDisconnectPacket(message));
             this.connection.disconnect(message);
             BungeeForwardingMod.LOGGER.warn("[BFF] Rejecting connection: remote address missing");
