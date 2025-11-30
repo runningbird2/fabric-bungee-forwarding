@@ -82,7 +82,7 @@ public abstract class ServerLoginPacketListenerImplMixin {
         Property[] forwarded = holder.bff$getForwardedProfile();
         if (forwarded != null) {
             for (Property property : forwarded) {
-                if (property != null) {
+                if (property != null && property.name() != null && !property.name().isBlank()) {
                     multimap.put(property.name(), property);
                 }
             }
