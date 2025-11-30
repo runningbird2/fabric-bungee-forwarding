@@ -1,6 +1,6 @@
 # Fabric Bungee Forwarding
 
-Fabric server-side mod that enforces BungeeCord/Velocity *legacy* forwarding (IP + UUID + profile data) on your backend servers.
+Fabric server-side mod that enables BungeeCord/Velocity *legacy* forwarding (IP + UUID + profile data) on your backend servers.
 
 ## Usage
 - Only allows logins that include the legacy forwarding payload (`host\0ip\0uuid\0profileJson`).
