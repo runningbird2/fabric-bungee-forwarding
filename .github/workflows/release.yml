@@ -49,6 +49,20 @@ jobs:
       - name: Resolve versions
         id: versions
         run: |
+          declare -A FABRIC_MAP=(
+            ["1.21"]="0.102.0+1.21"
+            ["1.21.1"]="0.116.7+1.21.1"
+            ["1.21.2"]="0.106.1+1.21.2"
+            ["1.21.3"]="0.114.1+1.21.3"
+            ["1.21.4"]="0.119.4+1.21.4"
+            ["1.21.5"]="0.128.2+1.21.5"
+            ["1.21.6"]="0.128.2+1.21.6"
+            ["1.21.7"]="0.129.0+1.21.7"
+            ["1.21.8"]="0.136.1+1.21.8"
+            ["1.21.9"]="0.134.0+1.21.9"
+            ["1.21.10"]="0.138.3+1.21.10"
+          )
+
           MOD_VERSION="${{ github.event.inputs.mod_version || '' }}"
           if [ -z "${MOD_VERSION}" ]; then
             MOD_VERSION="${GITHUB_REF_NAME#v}"
@@ -70,6 +84,14 @@ jobs:
               curl -s "https://api.modrinth.com/v2/project/fabric-api/version?game_versions=[\"${MC_VERSION}\"]&loaders=[\"fabric\"]" \
               | jq -r '.[0].version_number'
             )"
+          fi
+          if [ -z "${FABRIC_API_VERSION}" ] || [ "${FABRIC_API_VERSION}" = "null" ]; then
+            FABRIC_API_VERSION="${FABRIC_MAP[${MC_VERSION}]}"
+          fi
+
+          if [ -z "${FABRIC_API_VERSION}" ] || [ "${FABRIC_API_VERSION}" = "null" ]; then
+            echo "Unable to resolve Fabric API for ${MC_VERSION}" >&2
+            exit 1
           fi
 
           echo "mod=${MOD_VERSION}" >> "${GITHUB_OUTPUT}"
