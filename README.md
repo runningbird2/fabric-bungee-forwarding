@@ -16,8 +16,7 @@ Fabric server-side mod that enables BungeeCord/Velocity *legacy* forwarding (IP 
 1) Remove any other forwarding mods from the backend (`mods/`), e.g. FabricProxy-Lite.  
 2) Drop the latest `fabric-bungee-forwarding-<mod>+<mc>.jar` into the backend `mods/` folder.  
 3) Proxy: enable legacy/“bungeecord” forwarding (Velocity: `player-info-forwarding-mode = legacy`; Bungee/Waterfall: standard IP forwarding).  
-4) Backend: run in offline mode with `bungeecord: true` (or equivalent), then restart.  
-5) Connect through the proxy; direct connections will be rejected unless they include forwarding data.
+4) Connect through the proxy; direct connections will be rejected unless they include forwarding data.
 
 No config file is required. Keep one forwarding mod per backend to avoid conflicts.
 
