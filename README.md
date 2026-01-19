@@ -16,6 +16,20 @@ Fabric server-side mod that enables BungeeCord/Velocity *legacy* forwarding (IP 
 
 No config file is required. Keep one forwarding mod per backend to avoid conflicts.
 
+## Chat handling
+Some proxies/backends can log warnings like `Received chat packet with missing or invalid signature` after server switches.  
+This mod can force chat messages to be sent as disguised system chat to avoid those errors (and related chat failures), and it can suppress backend chat broadcasts to prevent duplicates when the proxy already relays chat.
+
+Configure in `config/fabric-bungee-forwarding.toml` (default: enabled):
+```toml
+hackMessageChain = true
+skipLastSeenValidation = false
+forceSystemChat = true
+suppressBackendChat = true
+```
+
+Note: This disables signed chat verification on the backend.
+
 ## Building from source
 ```bash
 ./gradlew build

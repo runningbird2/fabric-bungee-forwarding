@@ -9,7 +9,9 @@
     "ConnectionMixin",
     "ClientIntentionPacketMixin",
     "ServerHandshakePacketListenerImplMixin",
-    "ServerLoginPacketListenerImplMixin"
+    "ServerLoginPacketListenerImplMixin",
+    "ServerPlayNetworkHandlerMessageChainMixin",
+    "ServerGamePacketListenerSuppressChatMixin"
   ],
   "injectors": {
     "defaultRequire": 1

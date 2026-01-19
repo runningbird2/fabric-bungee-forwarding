@@ -12,7 +12,7 @@ base {
 }
 
 repositories {
-    // Additional repositories can be added here if we depend on third-party mods.
+    mavenCentral()
 }
 
 loom {
@@ -31,6 +31,8 @@ dependencies {
     mappings loom.officialMojangMappings()
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    implementation "com.moandjiezana.toml:toml4j:0.7.2"
+    include "com.moandjiezana.toml:toml4j:0.7.2"
 }
 
 processResources {
